@@ -8,35 +8,38 @@ public class Main {
 	static int[][] houses; // 집 위치 저장
 	static int chickenCount = 0; // 치킨집 개수
 	static int houseCount = 0; // 집 개수
-	static int INF = 100000000; // 최소 거리 계산에 사용할 상수값 선언
-	static int result = INF; // 답(최소 거리) 초기화
+	static final int INF = 100000000; // 최소 거리 계산에 사용할 상수값 선언
+	static int result = INF; // 최소 거리 (답)
 
 	// 거리 계산 함수
 	public static int calcDist(int x1, int y1, int x2, int y2) {
 		return Math.abs(x1 - x2) + Math.abs(y1 - y2);
 	}
 
-	// 조합으로 순회하면서 치킨집을 선택해 최소 거리 계산
-	public static void combi(int[][] selected, int start, int r) {
+	// 조합으로 순회하면서 거리 계산해서 최소값 구하기
+	public static void combi(int start, int count, boolean[] visited) {
 		// m개 선택되었을 때
-		if (r == m) {
+		if (count == m) {
 			int totalDist = 0;
 			for (int i = 0; i < houseCount; i++) {
 				int minDist = INF;
-				for (int j = 0; j < m; j++) {
-					// 집 x, y랑 치킨집 x, y (고른 치킨집으로 해야함)
-					int dist = calcDist(houses[i][0], houses[i][1], selected[j][0], selected[j][1]);
-					minDist = Math.min(minDist, dist); // 최소 거리 갱신
+				for (int j = 0; j < chickenCount; j++) {
+					if (visited[j]) { // 선택된 치킨집인 경우
+						int dist = calcDist(houses[i][0], houses[i][1], chickens[j][0], chickens[j][1]);
+						minDist = Math.min(minDist, dist); // 최소 거리 갱신
+					}
 				}
-				totalDist += minDist;
+				totalDist += minDist; // 총 거리 합산
 			}
 			result = Math.min(result, totalDist); // 최소 거리 갱신
 			return;
 		}
-		
+
+		// 치킨집에 대해 모두 순회
 		for (int i = start; i < chickenCount; i++) {
-			selected[r] = chickens[i]; // 선택된 치킨집 저장
-			combi(selected, i + 1, r + 1);
+			visited[i] = true; // 현재 치킨집 선택
+			combi(i + 1, count + 1, visited); // 다음 단계
+			visited[i] = false; // 선택 해제
 		}
 	}
 
@@ -47,9 +50,8 @@ public class Main {
 		n = Integer.parseInt(st.nextToken()); // 도시 크기
 		m = Integer.parseInt(st.nextToken()); // 남길 치킨집 개수
 
-		// n * n크기 / 
-		chickens = new int[n * n][2];
-		houses = new int[n * n][2];
+		chickens = new int[n * n][2]; // 치킨집 배열(x, y 좌표 저장)
+		houses = new int[n * n][2]; // 집 배열(x, y 좌표 저장)
 
 		// 도시 정보 입력 처리
 		for (int i = 0; i < n; i++) {
@@ -58,24 +60,17 @@ public class Main {
 				int token = Integer.parseInt(st.nextToken());
 				// 집이면 집 배열에
 				if (token == 1) {
-					if (houseCount < houses.length) {
-						houses[houseCount++] = new int[]{i, j};
-					}
+					houses[houseCount++] = new int[]{i, j};
 				}
 				// 치킨이면 치킨집 배열에
 				else if (token == 2) {
-					if (chickenCount < chickens.length) {
-						chickens[chickenCount++] = new int[]{i, j};
-					}
+					chickens[chickenCount++] = new int[]{i, j};
 				}
 			}
 		}
 
-		// 선택할 치킨집 배열
-		int[][] noClose = new int[m][2];
-
-		// 폐업시키지 않을 치킨집 조합 계산
-		combi(noClose, 0, 0);
-		System.out.println(result);
+		boolean[] visited = new boolean[chickenCount]; // boolean 배열로 해당 치킨집 방문 여부 처리
+		combi(0, 0, visited); // 계산
+		System.out.println(result); // 최소 거리 출력
 	}
 }
