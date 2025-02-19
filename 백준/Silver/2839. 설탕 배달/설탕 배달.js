@@ -2,16 +2,11 @@ const fs = require('fs');
 
 // 백준 제출용
 let input = fs.readFileSync('/dev/stdin').toString().trim().split('\n');
-
-
-// 백준 2839번 설탕 배달
 const n = Number(input);
 
-let minVinyl = Infinity;
+let minVinyl = 5001;
 
-for (let i = 0; i <= n; i++) {
-  if (i * 5 > n) break;
-  
+for (let i = 0; i <= Math.floor(n / 5); i++) {
   const r = n - 5 * i;
 
   if (r % 3 === 0) {
@@ -20,4 +15,4 @@ for (let i = 0; i <= n; i++) {
   }
 }
 
-console.log(minVinyl === Infinity ? -1 : minVinyl);
+console.log(minVinyl === 5001 ? -1 : minVinyl);
