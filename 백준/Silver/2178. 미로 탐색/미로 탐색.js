@@ -1,16 +1,11 @@
 const fs = require('fs');
 
-// 로컬 테스트용: 입력 파일 경로 설정
+// 백준 제출용
+const input = fs.readFileSync('/dev/stdin').toString().trim().split('\n');
+
+// 로컬 테스트용
 // const filePath = process.platform === 'linux' ? '/dev/stdin' : __dirname + '/input.txt';
 // const input = fs.readFileSync(filePath).toString().trim().split('\n');
-
-// 백준
-const input = [];
-process.stdin.on('data', (chunk) => input.push(chunk));
-process.stdin.on('end', () => {
-  const data = input.join('').trim().split('\n');
-  solution(data);
-});
 
 const solution = (input) => {
   const [n, m] = input[0].split(' ').map(Number);
@@ -60,4 +55,4 @@ const bfs = (maze, n, m) => {
   }
 };
 
-// solution(input);
+solution(input);
