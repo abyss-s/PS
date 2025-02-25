@@ -5,16 +5,13 @@ const treeInfo = input.slice(1).map((li) => li.split(' ')); // a와 b가 가중�
 const mst = {};
 
 for (let i = 0; i < e; i++) {
-  const [a, b, c] = treeInfo[i].map((v) => +v);
-  if (mst[a]) mst[a].push([b, c]);
-  else mst[a] = [[b, c]];
-  if (mst[b]) mst[b].push([a, c]);
-  else mst[b] = [[a, c]];
-  if (mst[c]) mst[c].push([a, b]);
-  else mst[c] = [[a, b]];
+  const [a, b, c] = treeInfo[i].map((i) => +i);
+  if (!mst[a]) mst[a] = [];
+  mst[a].push([b, c]);
+  if (!mst[b]) mst[b] = [];
+  mst[b].push([a, c]);
 }
 
-// 크루스칼 알고리즘
 const kruskal = (mst) => {
   const parent = Array.from({ length: v + 1 }, (_, i) => i);
   const make = () => {
@@ -31,7 +28,9 @@ const kruskal = (mst) => {
     const rootY = find(y);
     if (rootX !== rootY) {
       parent[rootY] = rootX;
+      return true;
     }
+    return false;
   };
   const edges = [];
   for (const [a, b, c] of treeInfo) {
@@ -41,7 +40,8 @@ const kruskal = (mst) => {
   edges.sort((a, b) => a[2] - b[2]);
   let result = 0;
   for (const [a, b, c] of edges) {
-    if (find(a) !== find(b)) {
+    if (union(a, b)) {
+      // if (find(a) !== find(b)) {
       union(a, b);
       result += +c;
     }
@@ -49,6 +49,5 @@ const kruskal = (mst) => {
   return result;
 };
 
-//console.log(mst);
 kruskal(mst);
 console.log(kruskal(mst));
