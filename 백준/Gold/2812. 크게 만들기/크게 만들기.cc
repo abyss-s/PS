@@ -1,25 +1,25 @@
 #include <iostream>
 #include <string>
-#include <stack>
-#include <vector>
+#include <deque>
 using namespace std;
 int main(){
     int n,k;
-    string num, rem;
+    string num;
+    int cnt=0;
     cin >> n >> k>> num;
-    vector<char> v;
+    deque<char> d;
     for(char c : num){
-        while(!v.empty()&& k > 0 && v.back() < c){
-            v.pop_back();
-            k--;
+        while(!d.empty()&& cnt<k && d.back() < c){
+            d.pop_back();
+            cnt++;
         }
-        v.push_back(c);
+        d.push_back(c);
     }
-    while (k > 0 && !v.empty()) {
-           v.pop_back();
-           k--;
-       }
-    for(char c: v) cout << c;
-    cout << "\n";
+    while(cnt<k){
+        d.pop_back();
+        cnt++;
+    }
+    string res(d.begin(),d.end());
+    cout << res <<"\n";
     return 0;
 }
