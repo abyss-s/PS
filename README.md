@@ -12,22 +12,5 @@
 
 [문제 풀이 repo](https://github.com/abyss-s/codetree-TILs)  
 
-
-# LeetCode Topics
-## Math
-|  |
-| ------- |
-| [0067-add-binary](https://github.com/abyss-s/PS/tree/master/0067-add-binary) |
-## String
-|  |
-| ------- |
-| [0067-add-binary](https://github.com/abyss-s/PS/tree/master/0067-add-binary) |
-## Bit Manipulation
-|  |
-| ------- |
-| [0067-add-binary](https://github.com/abyss-s/PS/tree/master/0067-add-binary) |
-## Simulation
-|  |
-| ------- |
-| [0067-add-binary](https://github.com/abyss-s/PS/tree/master/0067-add-binary) |
-<!---LeetCode Topics End-->
+# LeetCode
+[문제 풀이 repo](https://github.com/abyss-s/LeetCode)  
