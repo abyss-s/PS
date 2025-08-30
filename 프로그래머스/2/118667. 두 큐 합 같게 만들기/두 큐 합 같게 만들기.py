@@ -9,24 +9,25 @@ def solution(queue1, queue2):
     answer = 0
     q1, q2 = deque(queue1), deque(queue2)
     sum1, sum2 = sum(q1), sum(q2)
+    total = sum1 + sum2
 
     if (sum1 + sum2) % 2 != 0:
         return -1
 
     while True:
-        if answer == 3 * len(queue1):
+        if answer == 4 * len(queue1):
             return -1
 
         if sum1 > sum2:
-            a = q1.popleft()
-            q2.append(a)
-            sum1 -= a
-            sum2 += a
+            value = q1.popleft()
+            q2.append(value)
+            sum1 -= value
+            sum2 += value
         elif sum1 < sum2:
-            a = q2.popleft()
-            q1.append(a)
-            sum1 += a
-            sum2 -= a
+            value = q2.popleft()
+            q1.append(value)
+            sum1 += value
+            sum2 -= value
         else:
             return answer
         answer += 1
