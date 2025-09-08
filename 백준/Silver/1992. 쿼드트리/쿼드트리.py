@@ -11,10 +11,12 @@ def recur(x, y, size):
         for j in range(y, y + size):
             if arr[i][j] != s:
                 mid = size // 2
-                return ("(" + recur(x, y, mid) + recur(x, y + mid, mid)
-                        + recur(x + mid, y, mid) + recur(x + mid,
-                                                         y + mid,
-                                                         mid) + ")")
+                return "(" \
+                    + recur(x, y, mid) \
+                    + recur(x, y + mid, mid) \
+                    + recur(x + mid, y, mid) \
+                    + recur(x + mid, y + mid, mid) \
+                    + ")"
     return s
 
 
