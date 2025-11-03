@@ -1,27 +1,20 @@
-from collections import defaultdict
-
 def solution(gems):
-    l, r = 0, 0
-    typ = len(set(gems))
-    n = len(gems)
-    ans = [0, n - 1]
+    num = len(set(gems))  # 전체 보석 종류 개수
+    d = {}
+    start = 0
+    ans = [0, len(gems) - 1]  # 최소 구간 후보
 
-    dic = defaultdict(int)
-    dic[gems[l]] += 1
+    for end in range(len(gems)):
+        d[gems[end]] = d.get(gems[end], 0) + 1  # 보석 개수 추가
 
-    while r < n:
-        if len(dic) < typ:
-            r += 1
-            if r == n:
-                break
-            dic[gems[r]] += 1
-        else:
-            if r - l < ans[1] - ans[0]:
-                ans = [l, r]
-            if dic[gems[l]] == 1:
-                del dic[gems[l]]
-            else:
-                dic[gems[l]] -= 1
-            l += 1
+        # 투포인터
+        while len(d) == num:
+            if end - start < ans[1] - ans[0]:
+                ans = [start, end]
+
+            d[gems[start]] -= 1
+            if d[gems[start]] == 0:
+                del d[gems[start]]
+            start += 1
 
     return [ans[0] + 1, ans[1] + 1]
