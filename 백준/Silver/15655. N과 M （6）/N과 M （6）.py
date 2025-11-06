@@ -1,7 +1,20 @@
-from itertools import combinations
+import sys
 
+input = sys.stdin.readline
 n, m = map(int, input().split())
-arr = list(map(int, input().split()))
-arr.sort()
-for c in combinations(arr, m):
-    print(*c)
+arr = sorted(list(map(int, input().split())))
+total = []
+
+
+def bt(s):
+    if len(total) == m:
+        print(*total)
+        return
+
+    for i in range(s, n):
+        total.append(arr[i])
+        bt(i + 1)
+        total.pop()
+
+
+bt(0)
